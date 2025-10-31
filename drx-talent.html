@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DX Talent Passport — Vanilla HTML (Full Sections)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bg: '#070a12', card: '#0b1222', edge: '#1a2746', acc: '#34d399' }, boxShadow: { glow: '0 0 0 1px rgba(52,211,153,.3), 0 10px 30px rgba(0,0,0,.35)' } } } }
+    </script>
+    <style>
+        body {
+            background: #070a12;
+            color: #fff
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(20, 30, 58, .7), rgba(10, 15, 31, .9));
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        .input {
+            width: 100%;
+            border-radius: 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .12);
+            padding: .6rem .75rem;
+            color: #fff
+        }
+
+        .input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 211, 153, .4)
+        }
+
+        .btn {
+            border: 1px solid rgba(255, 255, 255, .12);
+            padding: .5rem .9rem;
+            border-radius: 12px
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, .06)
+        }
+
+        .btn-primary {
+            background: rgba(52, 211, 153, .22)
+        }
+
+        .btn-primary:hover {
+            background: rgba(52, 211, 153, .32)
+        }
+
+        .chip {
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 999px;
+            padding: .15rem .5rem;
+            color: #cbd5e1
+        }
+
+        .menu {
+            position: relative
+        }
+
+        .menu-panel {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: .5rem;
+            width: 14rem;
+            background: #0b1222;
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 12px;
+            display: none
+        }
+
+        .menu.open .menu-panel {
+            display: block
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-40 border-b border-white/10 backdrop-blur bg-[#070a12]/80">
+        <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-acc/10 grid place-items-center border border-acc/30 shadow-glow">
+                <span class="text-[13px] font-bold text-acc">DX</span>
+            </div>
+            <div>
+                <h1 class="text-lg leading-5 font-semibold">DX Talent Passport™</h1>
+                <p class="text-xs text-white/60">Single‑File Vanilla HTML • Full Sections</p>
+            </div>
+            <div class="ml-auto flex items-center gap-2">
+                <button id="btnSaveAll" class="btn text-xs md:text-base">Save Draft</button>
+                <button id="btnSubmitAll" class="btn btn-primary text-xs md:text-base">Submit for Review</button>
+                <!-- Dropdown Menu Button -->
+                <div class="menu" id="menu">
+                    <button class="btn" id="menuBtn">☰ Menu</button>
+                    <div class="menu-panel">
+                        <div class="px-3 py-2 text-xs text-white/60">Quick Actions</div>
+                        <div class="border-t border-white/10"></div>
+                        <button class="w-full text-left px-3 py-2 text-sm hover:bg-white/5" id="mSave">Save
+                            Draft</button>
+                        <button class="w-full text-left px-3 py-2 text-sm hover:bg-white/5" id="mSubmit">Submit for
+                            Review</button>
+                        <div class="border-t border-white/10"></div>
+                        <button class="w-full text-left px-3 py-2 text-sm hover:bg-white/5" id="mTop">Back to
+                            Top</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Layout -->
+    <div class="mx-auto max-w-7xl px-4 py-6 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-6">
+        <!-- Sidebar -->
+        <aside class="card rounded-2xl p-3 h-max sticky top-28 md:top-20">
+            <!-- Mobile Dropdown -->
+            <div class="md:hidden relative">
+              <button
+                id="mobileMenuBtn"
+                class="w-full flex justify-between items-center px-4 py-2 rounded-xl bg-gray-800 text-white"
+              >
+                <span>Navigation</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+          
+              <div
+                id="mobileMenu"
+                class="absolute w-full mt-2 bg-gray-800 rounded-xl shadow-lg hidden z-50"
+              >
+                <nav class="flex flex-col text-sm">
+                  <a href="#sec-prereg" class="px-4 py-2 hover:bg-white/10">1. Pre-Registration</a>
+                  <a href="#sec-standard" class="px-4 py-2 hover:bg-white/10">2. Standard Info</a>
+                  <a href="#sec-mission" class="px-4 py-2 hover:bg-white/10">3. Mission</a>
+                  <a href="#sec-integrity" class="px-4 py-2 hover:bg-white/10">4. Trust & Integrity</a>
+                  <a href="#sec-yield" class="px-4 py-2 hover:bg-white/10">5. Yield & Financial</a>
+                  <a href="#sec-approvals" class="px-4 py-2 hover:bg-white/10">6. Approvals / Audit</a>
+                  <a href="#sec-settings" class="px-4 py-2 hover:bg-white/10">7. Settings</a>
+                  <a href="#sec-evidence" class="px-4 py-2 hover:bg-white/10">8. Evidence</a>
+                  <a href="#sec-assessment" class="px-4 py-2 hover:bg-white/10">9. Assessment</a>
+                  <a href="#sec-parenting" class="px-4 py-2 hover:bg-white/10">10. Parenting & Habits</a>
+                  <a href="#sec-reputation" class="px-4 py-2 hover:bg-white/10">11. Reputation</a>
+                  <a href="#sec-dispute" class="px-4 py-2 hover:bg-white/10">12. Dispute</a>
+                </nav>
+              </div>
+            </div>
+          
+            <!-- Desktop Sidebar -->
+            <nav id="sideNav" class="hidden md:block space-y-1 text-sm">
+              <a href="#sec-prereg" class="block px-3 py-2 rounded-xl hover:bg-white/5">1. Pre-Registration</a>
+              <a href="#sec-standard" class="block px-3 py-2 rounded-xl hover:bg-white/5">2. Standard Info</a>
+              <a href="#sec-mission" class="block px-3 py-2 rounded-xl hover:bg-white/5">3. Mission</a>
+              <a href="#sec-integrity" class="block px-3 py-2 rounded-xl hover:bg-white/5">4. Trust & Integrity</a>
+              <a href="#sec-yield" class="block px-3 py-2 rounded-xl hover:bg-white/5">5. Yield & Financial</a>
+              <a href="#sec-approvals" class="block px-3 py-2 rounded-xl hover:bg-white/5">6. Approvals / Audit</a>
+              <a href="#sec-settings" class="block px-3 py-2 rounded-xl hover:bg-white/5">7. Settings</a>
+              <a href="#sec-evidence" class="block px-3 py-2 rounded-xl hover:bg-white/5">8. Evidence</a>
+              <a href="#sec-assessment" class="block px-3 py-2 rounded-xl hover:bg-white/5">9. Assessment</a>
+              <a href="#sec-parenting" class="block px-3 py-2 rounded-xl hover:bg-white/5">10. Parenting & Habits</a>
+              <a href="#sec-reputation" class="block px-3 py-2 rounded-xl hover:bg-white/5">11. Reputation</a>
+              <a href="#sec-dispute" class="block px-3 py-2 rounded-xl hover:bg-white/5">12. Dispute</a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="space-y-8">
+            <!-- 1. Pre‑Registration -->
+            <section id="sec-prereg" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">1) Pre‑Registration (Identity)</h2>
+                <div class="mt-4 grid md:grid-cols-2 gap-4">
+                    <div><label class="text-sm text-white/70">Guardian Id</label><input id="pre_guardianId"
+                            class="input" placeholder="AUTO" value="AUTO" /></div>
+                    <div><label class="text-sm text-white/70">Jurisdiction</label>
+                        <select id="pre_jurisdiction" class="input">
+                            <option>MY</option>
+                            <option>ID</option>
+                            <option>SG</option>
+                            <option>TH</option>
+                        </select>
+                    </div>
+                    <div><label class="text-sm text-white/70">Child Legal Name</label><input id="pre_legal"
+                            class="input" placeholder="Aisyah bt Ali" /></div>
+                    <div><label class="text-sm text-white/70">Child Preferred Name</label><input id="pre_pref"
+                            class="input" placeholder="Aisyah" /></div>
+                    <div><label class="text-sm text-white/70">Date of Birth</label><input id="pre_dob" type="date"
+                            class="input" /></div>
+                    <div class="md:col-span-2">
+                        <div class="flex flex-wrap gap-4">
+                            <label class="flex items-center gap-2 text-sm"><input id="pre_c_data" type="checkbox"
+                                    class="accent-acc" /> data_processing_v1</label>
+                            <label class="flex items-center gap-2 text-sm"><input id="pre_c_assess" type="checkbox"
+                                    class="accent-acc" /> assessment_v1</label>
+                            <label class="flex items-center gap-2 text-sm"><input id="pre_c_art" type="checkbox"
+                                    class="accent-acc" /> artifact_storage_v1</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 flex gap-2">
+                    <button class="btn" onclick="exportPre()">Preview / Export JSON</button>
+                    <span id="pre_err" class="chip"></span>
+                </div>
+                <pre id="pre_out" class="mt-3 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+            </section>
+
+            <!-- 2. Standard Info -->
+            <section id="sec-standard" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">2) Talent Profile Details — Standard Info</h2>
+                <div class="mt-4 grid md:grid-cols-2 gap-4">
+                    <div><label class="text-sm text-white/70">Full Name</label><input id="std_full" class="input"
+                            placeholder="Aisyah bt Ali" /></div>
+                    <div><label class="text-sm text-white/70">Pronunciation</label><input id="std_pron" class="input"
+                            placeholder="Eye-syah" /></div>
+                    <div>
+                        <label class="text-sm text-white/70">TruID Hash</label>
+                        <div class="flex gap-2"><input id="std_tru" class="input" placeholder="TRU-…" /><button
+                                class="btn" onclick="genTru()">Generate</button></div>
+                    </div>
+                    <div><label class="text-sm text-white/70">Verification Status</label>
+                        <select id="std_ver" class="input">
+                            <option>Unverified</option>
+                            <option>Pending</option>
+                            <option>Verified</option>
+                        </select>
+                    </div>
+                    <div><label class="text-sm text-white/70">DirhamX Wallet</label><input id="std_wallet" class="input"
+                            placeholder="0xA17F…C" /></div>
+                    <div><label class="text-sm text-white/70">STIFIn Type</label>
+                        <select id="std_stifin" class="input">
+                            <option value="">—</option>
+                            <option>F (Feeling)</option>
+                            <option>T (Thinking)</option>
+                            <option>S (Sensing)</option>
+                            <option>I (Intuiting)</option>
+                            <option>N (Instinct)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-3 flex gap-2">
+                    <button class="btn" onclick="exportStandard()">Preview / Export JSON</button>
+                </div>
+                <pre id="std_out" class="mt-3 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+            </section>
+
+            <!-- 3. Mission -->
+            <section id="sec-mission" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">3) Mission (Goals & Quests)</h2>
+                <div class="mt-4 grid md:grid-cols-2 gap-4">
+                    <div><label class="text-sm text-white/70">Title</label><input id="mis_title" class="input"
+                            placeholder="Build a bird feeder" /></div>
+                    <div><label class="text-sm text-white/70">Category</label><select id="mis_cat" class="input">
+                            <option>STEM</option>
+                            <option>Arts</option>
+                            <option>Sports</option>
+                            <option>Service</option>
+                        </select></div>
+                    <div><label class="text-sm text-white/70">Start Date</label><input id="mis_start" type="date"
+                            class="input" /></div>
+                    <div><label class="text-sm text-white/70">End Date</label><input id="mis_end" type="date"
+                            class="input" /></div>
+                    <div><label class="text-sm text-white/70">Rubric Id</label><input id="mis_rubric" class="input"
+                            value="RB_STEM_L1" /></div>
+                    <div><label class="text-sm text-white/70">Difficulty</label><input id="mis_diff" type="range"
+                            min="1" max="5" value="3" class="w-full" /></div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-medium">Tasks</h3><button class="btn" onclick="addTask()">+ Add Task</button>
+                    </div>
+                    <div id="taskList" class="mt-2 space-y-2"></div>
+                </div>
+                <div class="mt-3 flex gap-2">
+                    <button class="btn" onclick="exportMission()">Preview / Export JSON</button>
+                </div>
+                <pre id="mis_out" class="mt-3 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+            </section>
+
+            <!-- 4. Trust & Integrity -->
+            <section id="sec-integrity" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">4) Trust & Integrity</h2>
+                <div class="grid md:grid-cols-3 gap-6 mt-4">
+                    <div><label class="text-sm text-white/70">Artifact Integrity</label><input id="int_art" type="range"
+                            min="0" max="100" value="70" class="w-full" /></div>
+                    <div><label class="text-sm text-white/70">Attestation Depth</label><input id="int_att" type="range"
+                            min="0" max="100" value="60" class="w-full" /></div>
+                    <div><label class="text-sm text-white/70">Anomaly Clearance</label><input id="int_ano" type="range"
+                            min="0" max="100" value="80" class="w-full" /></div>
+                    <div class="md:col-span-3"><label class="text-sm text-white/70">Completion Discipline</label><input
+                            id="int_dis" type="range" min="0" max="100" value="75" class="w-full" /></div>
+                </div>
+                <div class="mt-3 flex items-center gap-3">
+                    <button class="btn" onclick="computeIntegrity()">Compute Index</button>
+                    <span id="int_score" class="chip">Index: —</span>
+                    <span id="int_tier" class="chip">Risk Tier: —</span>
+                </div>
+                <p class="text-xs text-white/60 mt-2">Index = 0.4·Artifact + 0.3·Attestation + 0.2·Anomaly +
+                    0.1·Discipline</p>
+            </section>
+
+            <!-- 5. Yield & Financial -->
+            <section id="sec-yield" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">5) Yield & Financial (Guardian‑funded Escrow)</h2>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <label class="text-sm text-white/70">Create Offer (Escrow)</label>
+                        <input id="esc_payer" class="input mt-1" placeholder="GuardianId (G123)" value="G123" />
+                        <input id="esc_minor" class="input mt-2" placeholder="MinorId (M456)" value="M456" />
+                        <input id="esc_mission" class="input mt-2" placeholder="MissionId (MIS789)" value="MIS789" />
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            <input id="esc_amount" class="input" placeholder="Amount" value="30" />
+                            <select id="esc_curr" class="input">
+                                <option>RM</option>
+                                <option>USD</option>
+                            </select>
+                        </div>
+                        <input id="esc_minScore" class="input mt-2" placeholder="Min Score (0‑100)" value="70" />
+                        <input id="esc_auto" class="input mt-2" placeholder="Auto‑Release Days" value="2" />
+                        <button class="btn mt-2" onclick="exportEscrow()">Preview / Export JSON</button>
+                        <pre id="esc_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                    <div>
+                        <label class="text-sm text-white/70">Jar Allocation (Simulated)</label>
+                        <div class="grid grid-cols-3 gap-2 mt-1">
+                            <div><span class="text-sm text-white/70">Savings %</span><input id="jar_save" type="number"
+                                    class="input" value="50" /></div>
+                            <div><span class="text-sm text-white/70">Spending %</span><input id="jar_spend"
+                                    type="number" class="input" value="30" /></div>
+                            <div><span class="text-sm text-white/70">Charity %</span><input id="jar_give" type="number"
+                                    class="input" value="20" /></div>
+                        </div>
+                        <button class="btn mt-2" onclick="computeJars()">Compute</button>
+                        <pre id="jar_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Approvals / Audit -->
+            <section id="sec-approvals" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">6) Approvals / Audit Queue</h2>
+                <div class="grid md:grid-cols-3 gap-4 mt-4">
+                    <div><label class="text-sm text-white/70">Entity Type</label><select id="rev_type" class="input">
+                            <option>Identity</option>
+                            <option>Artifact</option>
+                            <option>Assessment</option>
+                            <option>Offer</option>
+                            <option>Dispute</option>
+                        </select></div>
+                    <div><label class="text-sm text-white/70">Entity ID</label><input id="rev_id" class="input"
+                            placeholder="ART123" /></div>
+                    <div><label class="text-sm text-white/70">Priority</label><select id="rev_pri" class="input">
+                            <option>Normal</option>
+                            <option>High</option>
+                        </select></div>
+                </div>
+                <div class="mt-3 flex gap-2"><button class="btn" onclick="exportReview()">Preview / Export JSON</button>
+                </div>
+                <pre id="rev_out" class="mt-3 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+            </section>
+
+            <!-- 7. Settings -->
+            <section id="sec-settings" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">7) Settings (Privacy & Notifications)</h2>
+                <div class="grid md:grid-cols-3 gap-6 mt-4">
+                    <div><label class="text-sm text-white/70">Profile Visibility</label><select id="set_vis"
+                            class="input">
+                            <option>Private</option>
+                            <option>Shared via Link</option>
+                            <option>Org-only</option>
+                        </select></div>
+                    <div><label class="text-sm text-white/70">Guardian Roles</label><input id="set_guard" class="input"
+                            placeholder="Primary: G123; Secondary: G789" /></div>
+                    <div><label class="text-sm text-white/70">Notifications</label><select id="set_notif" class="input">
+                            <option>Email</option>
+                            <option>SMS</option>
+                            <option>App</option>
+                        </select></div>
+                </div>
+                <div class="mt-3 flex gap-2"><button class="btn" onclick="exportSettings()">Preview / Export
+                        JSON</button></div>
+                <pre id="set_out" class="mt-3 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+            </section>
+
+            <!-- 8. Evidence -->
+            <section id="sec-evidence" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">8) Evidence (Artifacts & Attestations)</h2>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <label class="text-sm text-white/70">Upload Artifact (SHA‑256)</label>
+                        <input id="art_file" type="file" class="block w-full text-sm mt-1" />
+                        <input id="art_ctx_type" class="input mt-2"
+                            placeholder="Context Type (mission|assessment|academic)" value="mission" />
+                        <input id="art_ctx_id" class="input mt-2" placeholder="Context ID (MIS789)" value="MIS789" />
+                        <button class="btn mt-2" onclick="hashArtifact()">Hash & Build DTO</button>
+                        <pre id="art_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                    <div>
+                        <label class="text-sm text-white/70">Create Attestation (Ed25519 signature)</label>
+                        <input id="att_art" class="input" placeholder="ArtifactId (ART123)" />
+                        <input id="att_ver" class="input mt-2" placeholder="VerifierId (V222)" />
+                        <textarea id="att_stmt" class="input mt-2 h-24"
+                            placeholder="Original work produced during school club"></textarea>
+                        <textarea id="att_sig" class="input mt-2 h-20" placeholder="BASE64_SIGNATURE"></textarea>
+                        <button class="btn mt-2" onclick="exportAttestation()">Preview DTO</button>
+                        <pre id="att_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. Assessment -->
+            <section id="sec-assessment" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">9) Assessment Engine</h2>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <label class="text-sm text-white/70">Assessment Submit (STIFIn Kids)</label>
+                        <textarea id="asm_resp" class="input h-28" placeholder='{"Q1":3,"Q2":1}'></textarea>
+                        <button class="btn mt-2" onclick="exportAssessment()">Build Submit DTO</button>
+                        <pre id="asm_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                    <div>
+                        <label class="text-sm text-white/70">Parenting Guidance Hook</label>
+                        <textarea id="guidance_text" class="input h-28"
+                            placeholder="Insight + 5‑min activity"></textarea>
+                        <button class="btn btn-primary mt-2" onclick="exportGuidance()">Build Guidance Card</button>
+                        <pre id="guidance_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10. Parenting & Habits -->
+            <section id="sec-parenting" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">10) Parenting Guidance & Habit Loops</h2>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <label class="text-sm text-white/70">Enroll Habit Program</label>
+                        <select id="habit_prog" class="input">
+                            <option>Focus Builder – 14 days</option>
+                            <option>Reading Streak – 21 days</option>
+                        </select>
+                        <button class="btn mt-2" onclick="exportHabitEnroll()">Preview DTO</button>
+                        <pre id="habit_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                    <div>
+                        <label class="text-sm text-white/70">Daily Check‑in</label>
+                        <input id="habit_day" class="input" placeholder="Day #" />
+                        <textarea id="habit_notes" class="input mt-2 h-24" placeholder="Short reflection"></textarea>
+                        <button class="btn btn-primary mt-2" onclick="exportHabitCheckin()">Build Check‑in DTO</button>
+                        <pre id="check_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 11. Portable Reputation -->
+            <section id="sec-reputation" class="card rounded-2xl p-6">
+                <h2 class="text-xl font-semibold">11) Portable Reputation Graph</h2>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <label class="text-sm text-white/70">Export Passport (VC/JSON‑LD)</label>
+                        <select id="rep_scope" class="input">
+                            <option>summary</option>
+                            <option>full</option>
+                        </select>
+                        <label class="inline-flex items-center gap-2 mt-2 text-sm"><input id="rep_art" type="checkbox"
+                                class="accent-acc" /> Include artifacts (explicit only)</label>
+                        <button class="btn mt-2" onclick="exportPassport()">Preview</button>
+                        <button class="btn btn-primary mt-2"
+                            onclick="downloadJSON(buildPassport(),'passport_export.json')">Export JSON</button>
+                        <pre id="rep_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                    <div>
+                        <label class="text-sm text-white/70">Issue VC (MissionOutcome)</label>
+                        <input id="vc_mis" class="input" placeholder="MissionId (MIS789)" />
+                        <button class="btn mt-2" onclick="exportVC()">Preview VC</button>
+                        <pre id="vc_out" class="mt-2 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 12. Dispute -->
+            <section id="sec-dispute" class="card rounded-2xl p-6 mb-10">
+                <h2 class="text-xl font-semibold">12) Dispute Resolution</h2>
+                <div class="grid md:grid-cols-3 gap-6 mt-4">
+                    <div><label class="text-sm text-white/70">Escrow ID</label><input id="dis_esc" class="input"
+                            placeholder="ESC123" /></div>
+                    <div><label class="text-sm text-white/70">Reason</label><input id="dis_reason" class="input"
+                            placeholder="Criteria not met" /></div>
+                    <div><label class="text-sm text-white/70">Opened By</label><select id="dis_open" class="input">
+                            <option>Guardian</option>
+                            <option>Org</option>
+                        </select></div>
+                </div>
+                <div class="mt-3 flex gap-2"><button class="btn" onclick="exportDispute()">Preview / Export
+                        JSON</button></div>
+                <pre id="dis_out" class="mt-3 text-xs bg-black/40 p-3 rounded-xl overflow-auto"></pre>
+            </section>
+        </main>
+    </div>
+
+    <footer class="border-t border-white/10 py-6 text-center text-xs text-white/60">DX Talent Passport™ • Vanilla HTML •
+        v1</footer>
+
+    <!-- Logic -->
+    <script>
+        // Helpers
+        const $ = (id) => document.getElementById(id);
+        const j = (obj) => JSON.stringify(obj, null, 2);
+        const downloadJSON = (obj, name) => { const blob = new Blob([j(obj)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = name; a.click(); URL.revokeObjectURL(url); };
+        const sha256Hex = async (buf) => { const hash = await crypto.subtle.digest('SHA-256', buf); return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join(''); };
+
+        // Dropdown menu
+        const menu = $('menu'); const menuBtn = $('menuBtn'); menuBtn.addEventListener('click', () => menu.classList.toggle('open'));
+        $('mSave').onclick = () => $('btnSaveAll').click();
+        $('mSubmit').onclick = () => $('btnSubmitAll').click();
+        $('mTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Pre‑Registration
+        function exportPre() {
+            const dob = $('pre_dob').value;
+            const age = dob ? Math.floor((Date.now() - new Date(dob)) / (365.25 * 24 * 3600 * 1000)) : null;
+            const within = age !== null && age >= 6 && age <= 12;
+            const dto = {
+                guardianId: $('pre_guardianId').value || 'AUTO',
+                child: { legalName: $('pre_legal').value, preferredName: $('pre_pref').value || undefined, dob, jurisdiction: $('pre_jurisdiction').value },
+                consents: [$('pre_c_data').checked ? 'data_processing_v1' : null, $('pre_c_assess').checked ? 'assessment_v1' : null, $('pre_c_art').checked ? 'artifact_storage_v1' : null].filter(Boolean),
+                _derived: { age, ageBandValid: within }
+            };
+            $('pre_out').textContent = j(dto);
+            $('pre_err').textContent = within ? 'Age OK' : '⚠ Age must be 6–12';
+            downloadJSON(dto, 'pre_registration.json');
+        }
+
+        // Standard Info
+        async function genTru() {
+            const seed = `${$('std_full').value}|${$('pre_dob').value}|${$('pre_jurisdiction').value}`;
+            const hex = await sha256Hex(new TextEncoder().encode(seed));
+            $('std_tru').value = 'TRU-' + hex.slice(0, 20).toUpperCase();
+        }
+        function exportStandard() {
+            const dto = { fullName: $('std_full').value, pronunciation: $('std_pron').value || undefined, truIdHash: $('std_tru').value, verificationStatus: $('std_ver').value, wallet: $('std_wallet').value || undefined, stifinType: $('std_stifin').value || undefined };
+            $('std_out').textContent = j(dto); downloadJSON(dto, 'standard_info.json');
+        }
+
+        // Mission tasks UI
+        function addTask(text = '', evd = true) {
+            const id = 't' + Math.random().toString(36).slice(2, 7);
+            const row = document.createElement('div'); row.className = 'flex gap-2 items-center'; row.id = id;
+            row.innerHTML = `<input class="input" placeholder="Task description" data-role="task-text" value="${text}"><label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-acc" data-role="task-evd" ${evd ? 'checked' : ''}/> Evidence</label><button class="btn" onclick="this.parentElement.remove()">Remove</button>`;
+            $('taskList').appendChild(row);
+        }
+        addTask(); addTask();
+        function exportMission() {
+            const tasks = [...document.querySelectorAll('#taskList > div')].map(d => ({ text: d.querySelector('[data-role="task-text"]').value, evidenceRequired: d.querySelector('[data-role="task-evd"]').checked }));
+            const dto = { minorId: 'M456', title: $('mis_title').value, category: $('mis_cat').value, startDate: $('mis_start').value || null, endDate: $('mis_end').value || null, rubricId: $('mis_rubric').value, tasks, difficulty: Number($('mis_diff').value || 0) };
+            $('mis_out').textContent = j(dto); downloadJSON(dto, 'mission_create.json');
+        }
+
+        // Integrity & Risk tier
+        function computeIntegrity() {
+            const a = +$('int_art').value, d = +$('int_att').value, n = +$('int_ano').value, c = +$('int_dis').value;
+            const idx = Math.round(0.4 * a + 0.3 * d + 0.2 * n + 0.1 * c);
+            const tier = idx >= 80 ? 'A' : idx >= 60 ? 'B' : 'C';
+            $('int_score').textContent = `Index: ${idx}`; $('int_tier').textContent = `Risk Tier: ${tier}`; return { index: idx, tier };
+        }
+
+        // Escrow
+        function exportEscrow() {
+            const integ = computeIntegrity();
+            const dto = { payerId: $('esc_payer').value, minorId: $('esc_minor').value, criteria: { missionId: $('esc_mission').value || null, minScore: Number($('esc_minScore').value || 0) }, amount: { currency: $('esc_curr').value, value: Number($('esc_amount').value || 0) }, autoReleaseDays: Number($('esc_auto').value || 0), riskTier: integ.tier };
+            $('esc_out').textContent = j(dto); downloadJSON(dto, 'escrow_offer.json');
+        }
+        function computeJars() { const s = +$('jar_save').value, p = +$('jar_spend').value, g = +$('jar_give').value; const out = { save: s, spend: p, give: g, total: s + p + g, valid: (s + p + g) === 100 }; $('jar_out').textContent = j(out); }
+
+        // Approvals
+        function exportReview() { const dto = { entityType: $('rev_type').value, entityId: $('rev_id').value, priority: $('rev_pri').value }; $('rev_out').textContent = j(dto); downloadJSON(dto, 'review_submit.json'); }
+
+        // Settings
+        function exportSettings() { const dto = { profileVisibility: $('set_vis').value, guardians: $('set_guard').value, notifications: $('set_notif').value }; $('set_out').textContent = j(dto); downloadJSON(dto, 'settings_update.json'); }
+
+        // Evidence
+        async function hashArtifact() { const f = $('art_file').files[0]; if (!f) { alert('Select a file'); return; } const sha = await sha256Hex(await f.arrayBuffer()); const dto = { ownerMinorId: 'M456', context: { type: $('art_ctx_type').value || 'mission', id: $('art_ctx_id').value || 'MIS789' }, fileRef: `local://${f.name}`, sha256: sha }; $('art_out').textContent = j(dto); downloadJSON(dto, 'artifact_register.json'); }
+        function exportAttestation() { const dto = { artifactId: $('att_art').value, verifierId: $('att_ver').value, statement: $('att_stmt').value, signature: $('att_sig').value }; $('att_out').textContent = j(dto); downloadJSON(dto, 'attestation_create.json'); }
+
+        // Assessment
+        function exportAssessment() { let parsed = {}; try { parsed = JSON.parse($('asm_resp').value || '{}'); } catch (e) { parsed = { _error: 'invalid JSON' }; } const dto = { assessmentId: 'A999', responses: Object.entries(parsed).map(([q, a]) => ({ q, a })) }; $('asm_out').textContent = j(dto); downloadJSON(dto, 'assessment_submit.json'); }
+        function exportGuidance() { const dto = { minorId: 'M456', content: $('guidance_text').value, createdAt: new Date().toISOString() }; $('guidance_out').textContent = j(dto); downloadJSON(dto, 'guidance_card.json'); }
+
+        // Habits
+        function exportHabitEnroll() { const dto = { programId: $('habit_prog').value, minorId: 'M456', startDate: new Date().toISOString().slice(0, 10) }; $('habit_out').textContent = j(dto); downloadJSON(dto, 'habit_enroll.json'); }
+        function exportHabitCheckin() { const dto = { programId: $('habit_prog').value, day: Number($('habit_day').value || 1), notes: $('habit_notes').value }; $('check_out').textContent = j(dto); downloadJSON(dto, 'habit_checkin.json'); }
+
+        // Reputation
+        function buildPassport() { return { minorId: 'M456', scope: $('rep_scope').value, includeArtifacts: $('rep_art').checked, signed: true }; }
+        function exportPassport() { const dto = buildPassport(); $('rep_out').textContent = j(dto); }
+        function exportVC() { const dto = { credentialType: 'MissionOutcome', missionId: $('vc_mis').value, issuedAt: new Date().toISOString(), signatureRef: 'SIG_PLACEHOLDER' }; $('vc_out').textContent = j(dto); downloadJSON(dto, 'vc_issue.json'); }
+
+        // Dispute
+        function exportDispute() { const dto = { escrowId: $('dis_esc').value, reason: $('dis_reason').value, openedBy: $('dis_open').value, createdAt: new Date().toISOString() }; $('dis_out').textContent = j(dto); downloadJSON(dto, 'dispute_open.json'); }
+
+        // Save/Submit all
+        function collectAll() {
+            const prereg = (() => { const dob = $('pre_dob').value; return { guardianId: $('pre_guardianId').value || 'AUTO', child: { legalName: $('pre_legal').value, preferredName: $('pre_pref').value || undefined, dob, jurisdiction: $('pre_jurisdiction').value }, consents: [$('pre_c_data').checked && 'data_processing_v1', $('pre_c_assess').checked && 'assessment_v1', $('pre_c_art').checked && 'artifact_storage_v1'].filter(Boolean) }; })();
+            const standard = { fullName: $('std_full').value, pronunciation: $('std_pron').value || undefined, truIdHash: $('std_tru').value, verificationStatus: $('std_ver').value, wallet: $('std_wallet').value || undefined, stifinType: $('std_stifin').value || undefined };
+            const mission = (() => { const tasks = [...document.querySelectorAll('#taskList>div')].map(d => ({ text: d.querySelector('[data-role="task-text"]').value, evidenceRequired: d.querySelector('[data-role="task-evd"]').checked })); return { minorId: 'M456', title: $('mis_title').value, category: $('mis_cat').value, startDate: $('mis_start').value || null, endDate: $('mis_end').value || null, rubricId: $('mis_rubric').value, tasks, difficulty: +$('mis_diff').value || 0 }; })();
+            const integrity = computeIntegrity();
+            const escrow = (() => { return { payerId: $('esc_payer').value, minorId: $('esc_minor').value, criteria: { missionId: $('esc_mission').value || null, minScore: +$('esc_minScore').value || 0 }, amount: { currency: $('esc_curr').value, value: +$('esc_amount').value || 0 }, autoReleaseDays: +$('esc_auto').value || 0, riskTier: (integrity?.tier || 'C') }; })();
+            const review = { entityType: $('rev_type').value, entityId: $('rev_id').value, priority: $('rev_pri').value };
+            const settings = { profileVisibility: $('set_vis').value, guardians: $('set_guard').value, notifications: $('set_notif').value };
+            const reputation = buildPassport();
+            return { prereg, standard, mission, integrity, escrow, review, settings, reputation };
+        }
+        $('btnSaveAll').onclick = () => downloadJSON(collectAll(), 'dx_passport_draft_vanilla.json');
+        $('btnSubmitAll').onclick = () => { downloadJSON(collectAll(), 'dx_passport_submit_vanilla.json'); alert('Submitted to Approvals Queue (demo)'); };
+
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        // Toggle buka/tutup dropdown
+        mobileMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        // Tutup dropdown saat klik di luar menu
+        window.addEventListener("click", (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.add("hidden");
+            }
+        });
+
+        // Tutup dropdown setelah klik salah satu link
+        document.querySelectorAll("#mobileMenu a").forEach((link) => {
+            link.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+        });
+    </script>
+</body>
+
+</html>
