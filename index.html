@@ -11,6 +11,11 @@
         tailwind.config = { theme: { extend: { colors: { bg: '#070a12', card: '#0b1222', edge: '#1a2746', acc: '#34d399' }, boxShadow: { glow: '0 0 0 1px rgba(52,211,153,.3), 0 10px 30px rgba(0,0,0,.35)' } } } }
     </script>
     <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
         body {
             background: #070a12;
             color: #fff
@@ -78,6 +83,12 @@
 
         .menu.open .menu-panel {
             display: block
+        }
+
+        @media (max-width: 768px) {
+            html {
+                scroll-padding-top: 200px;
+            }
         }
     </style>
 </head>
